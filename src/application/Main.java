@@ -22,7 +22,10 @@ public class Main extends Application {
 
 	  // Create and initialize a status label
 	  private Label lblStatusUpLeft = new Label("Level #1");
-	  private Label lblStatusDown = new Label("---Text---");
+	  private Label lblStatusUpCenter = new Label("0");
+	  private Label lblStatusUpRight = new Label("High Score: 3");
+	  
+	  private Label lblStatusDownLeft = new Label("---Text---");
 	  
 	  
 	@Override
@@ -42,15 +45,35 @@ public class Main extends Application {
 			    for (int i = 0; i < 10; i++)
 			      for (int j = 0; j < 10; j++)
 			        pane.add(cell[i][j] = new Cell(), j, i);
-
-			    BorderPane borderPane = new BorderPane();
-			    borderPane.setCenter(pane);
-			    borderPane.setBottom(lblStatusDown);
-			    borderPane.setTop(lblStatusUpLeft);
-			    borderPane.setPadding(new Insets(0,10,0,10));
 			    
 			    pane.setHgap(3);
 			    pane.setVgap(3);
+
+			    BorderPane borderPane = new BorderPane();
+			    borderPane.setCenter(pane);
+			    borderPane.setPadding(new Insets(0,10,0,10));
+
+			    //borderPane.setBottom(lblStatusDownLeft);
+			    //borderPane.setTop(lblStatusUpLeft);
+			    
+			    //BORDERPANE UP
+			    BorderPane borderPaneUp = new BorderPane();
+			    borderPaneUp.setStyle("-fx-background-color: gold");
+			    borderPaneUp.setLeft(lblStatusUpLeft);
+			    borderPaneUp.setCenter(lblStatusUpCenter);
+			    borderPaneUp.setRight(lblStatusUpRight);
+			    
+			    //BORDERPANE DOWN
+			    BorderPane borderPaneDown = new BorderPane();
+			    borderPaneDown.setStyle("-fx-background-color: gold");
+			    borderPaneDown.setLeft(lblStatusDownLeft);
+			    Button nextLevel = new Button("Next Level");
+			    nextLevel.setOnMouseClicked(e -> handleMouseClickButton());
+			    borderPaneDown.setRight(nextLevel);
+			    
+
+			    borderPane.setTop(borderPaneUp);
+			    borderPane.setBottom(borderPaneDown);
 			    
 			    // Create a scene and place it in the stage
 			    Scene scene = new Scene(borderPane, 450, 450);
@@ -63,19 +86,20 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	private Object handleMouseClickButton() {
+		System.out.println("Next level");
+		return null;
 	}
 	
 	
 	
 	
-	
-	
 	  
-	  
-	
 	
 	
 	// An inner class for a cell
