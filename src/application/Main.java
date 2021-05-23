@@ -41,23 +41,23 @@ public class Main extends Application {
 			*/
 
 			    // Pane to hold cell
-			    GridPane pane = new GridPane(); 
+			    GridPane gridPane = new GridPane(); 
 			    for (int i = 0; i < 10; i++)
 			      for (int j = 0; j < 10; j++)
-			        pane.add(cell[i][j] = new Cell(), j, i);
+			    	  gridPane.add(cell[i][j] = new Cell(), j, i);
 			    
-			    pane.setHgap(3);
-			    pane.setVgap(3);
+			    gridPane.setHgap(3);
+			    gridPane.setVgap(3);
+			    gridPane.setPadding(new Insets(5,5,5,5));
 
 			    BorderPane borderPane = new BorderPane();
-			    borderPane.setCenter(pane);
-			    borderPane.setPadding(new Insets(0,10,0,10));
-
-			    //borderPane.setBottom(lblStatusDownLeft);
-			    //borderPane.setTop(lblStatusUpLeft);
+			    borderPane.setCenter(gridPane);
+			    borderPane.setStyle("-fx-background-color: lavender");
+			    //borderPane.setPadding(new Insets(0,3,0,3));
 			    
 			    //BORDERPANE UP
 			    BorderPane borderPaneUp = new BorderPane();
+			    borderPaneUp.setPadding(new Insets(5,5,5,5));
 			    borderPaneUp.setStyle("-fx-background-color: gold");
 			    borderPaneUp.setLeft(lblStatusUpLeft);
 			    borderPaneUp.setCenter(lblStatusUpCenter);
@@ -65,13 +65,15 @@ public class Main extends Application {
 			    
 			    //BORDERPANE DOWN
 			    BorderPane borderPaneDown = new BorderPane();
+			    borderPaneDown.setPadding(new Insets(5,5,5,5));
 			    borderPaneDown.setStyle("-fx-background-color: gold");
 			    borderPaneDown.setLeft(lblStatusDownLeft);
 			    Button nextLevel = new Button("Next Level");
 			    nextLevel.setOnMouseClicked(e -> handleMouseClickButton());
+			    nextLevel.setStyle("-fx-background-color: tomato");
 			    borderPaneDown.setRight(nextLevel);
 			    
-
+			    //SET BORDERS
 			    borderPane.setTop(borderPaneUp);
 			    borderPane.setBottom(borderPaneDown);
 			    
@@ -123,7 +125,7 @@ public class Main extends Application {
 
 	    /* Handle a mouse click event */
 	    private void handleMouseClick() {
-	     
+			System.out.println("Cell");
   }
  }
 }
