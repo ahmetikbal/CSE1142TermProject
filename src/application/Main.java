@@ -1,6 +1,7 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,7 +47,10 @@ public class Main extends Application {
 			    borderPane.setCenter(pane);
 			    borderPane.setBottom(lblStatusDown);
 			    borderPane.setTop(lblStatusUpLeft);
-			   
+			    borderPane.setPadding(new Insets(0,10,0,10));
+			    
+			    pane.setHgap(3);
+			    pane.setVgap(3);
 			    
 			    // Create a scene and place it in the stage
 			    Scene scene = new Scene(borderPane, 450, 450);
@@ -81,6 +85,7 @@ public class Main extends Application {
 	  
 
 	    public Cell() {
+	      
 	      setStyle("-fx-border-color: black"); 
 	      this.setPrefSize(800, 800);
 	      this.setOnMouseClicked(e -> handleMouseClick());
