@@ -1,7 +1,5 @@
 package application;
 	
-import java.io.File;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
@@ -15,6 +13,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import java.io.*;
+import java.util.Scanner;
 
 public class Main extends Application {
 	
@@ -27,6 +27,26 @@ public class Main extends Application {
 	  private Label lblStatusUpRight = new Label("High Score: 3");
 	  
 	  private Label lblStatusDownLeft = new Label("---Text---");
+	  
+	  Image image = new Image(new File("image/mcwood.png").toURI().toString(), 50, 50, false, false);
+	  Image image2 = new Image(new File("image/mcstone.png").toURI().toString(), 50, 50, false, false);
+	  Image image3 = new Image(new File("image/mcmirror.png").toURI().toString(), 50, 50, false, false);
+	  Image image4 = new Image(new File("image/space.png").toURI().toString(), 50, 50, false, false);
+	  
+	  BackgroundImage wood = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+	  BackgroundImage stone = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+	  BackgroundImage mirror = new BackgroundImage(image3, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+	  BackgroundImage space = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+	  
+	  	  
+	  public String type;
+	  
+	  public int xloc;
+	  public int yloc;
+	  
+	  
+	  public int level = 1;
+	  
 	  
 	  
 	@Override
@@ -76,7 +96,14 @@ public class Main extends Application {
 			    borderPaneDown.setStyle("-fx-background-color: gold");
 			    borderPaneDown.setLeft(lblStatusDownLeft);
 			    Button nextLevel = new Button("Next Level");
-			    nextLevel.setOnMouseClicked(e -> handleMouseClickButton());
+			    nextLevel.setOnMouseClicked(e -> {
+					try {
+						handleMouseClickButton();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
 			    nextLevel.setStyle("-fx-background-color: tomato");
 			    borderPaneDown.setRight(nextLevel);
 			    
@@ -90,6 +117,15 @@ public class Main extends Application {
 			    primaryStage.setScene(scene); // Place the scene in the stage
 			    primaryStage.setResizable(false);
 			    primaryStage.show(); // Display the stage  
+			    
+			    levelGenerator();
+			    
+			    
+			    
+				  
+				  
+			   
+			    
 			
 			
 		} catch(Exception e) {
@@ -98,12 +134,75 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		
+		
 		launch(args);
 	}
 	
-	private Object handleMouseClickButton() {
+	private Object handleMouseClickButton() throws FileNotFoundException {
 		System.out.println("Next level");
+		level++;
+		levelGenerator();
+		lblStatusUpLeft.setText("Level #"+level);
 		return null;
+	}
+	
+	public void levelGenerator() throws FileNotFoundException {
+		
+		/*ImageView wood = new ImageView(image);
+		ImageView stone = new ImageView(image2);
+		ImageView mirror = new ImageView(image3);*/
+		
+		 String lvl = "levels/level"+level+".txt";
+		
+		
+		
+		 
+		for(int i=0;i<10;i++) {
+    		for(int j = 0;j<10;j++) {
+    			cell[i][j].setBackground(new Background(stone));
+    		}
+    	}
+		 //Take input from level txt files
+	    FileInputStream fis=new FileInputStream(lvl);
+	    Scanner sc = new Scanner(fis);
+	   
+	    while(sc.hasNext()) {
+	    	String input = sc.next();
+	    	String[] parts = input.split(",");
+	    	type = parts[0]; 
+	    	type = type.trim();
+	    	String e = "Empty";
+	    	String m = "Mirror";
+	    	String w = "Wood";
+	    	xloc = Integer.parseInt(parts[1]);
+	    	yloc = Integer.parseInt(parts[2]);
+	    	
+	    	
+	    	if(type.equals(e)) {
+	    		
+	    		cell[xloc][yloc].setBackground(new Background(space));
+	    		
+	    	}
+	    	else if(type.equals(m)) {
+	    		
+	    		cell[xloc][yloc].setBackground(new Background(mirror));
+	    		
+	    	}
+	    	else if(type.equals(w)) {
+	    		
+	    		cell[xloc][yloc].setBackground(new Background(wood));
+	    		
+	    	}
+	    	
+	    	
+	    	
+	    	System.out.println(type+xloc+yloc);
+	    }
+		
+		
+		
+		
 	}
 	
 	
@@ -115,8 +214,12 @@ public class Main extends Application {
 	// An inner class for a cell
 	  public class Cell extends Pane {
 		  
+		  	
+		  
+		  
 		public int i;
 		public int j;
+		
 		  
 	    public Cell() {
 	      
@@ -129,16 +232,18 @@ public class Main extends Application {
 	    private void handleMouseClick() {
 			System.out.println("Cell");
 			//this.setStyle("-fx-background-color: gold");
-
-			Image image = new Image(new File("image/mcwood.png").toURI().toString(), this.getWidth()+3, this.getHeight()+3, false, false);
-			ImageView iv = new ImageView(image);
-			this.getChildren().add(iv);
+			//this.getChildren().add(stone);
 			
-			//BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-			//this.setBackground(new Background(bg));
+			/*BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+			this.setBackground(new Background(bg));*/
+			
+			
+			
 			
 			lblStatusDownLeft.setText("(" + i + "," + j + ")");
   }
+	    
+	    
 	    
  }
 }
