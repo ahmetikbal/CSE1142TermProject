@@ -1,5 +1,7 @@
 package application;
 	
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
@@ -7,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -78,9 +82,10 @@ public class Main extends Application {
 			    borderPane.setBottom(borderPaneDown);
 			    
 			    // Create a scene and place it in the stage
-			    Scene scene = new Scene(borderPane, 450, 450);
+			    Scene scene = new Scene(borderPane, 550, 575);
 			    primaryStage.setTitle("Game"); // Set the stage title
 			    primaryStage.setScene(scene); // Place the scene in the stage
+			    primaryStage.setResizable(false);
 			    primaryStage.show(); // Display the stage  
 			
 			
@@ -106,26 +111,26 @@ public class Main extends Application {
 	
 	// An inner class for a cell
 	  public class Cell extends Pane {
-	    // Token used for this cell
-	    private char token = ' ';
 	  
-
 	    public Cell() {
 	      
 	      setStyle("-fx-border-color: black"); 
-	      this.setPrefSize(800, 800);
+	      this.setPrefSize(80, 80);
 	      this.setOnMouseClicked(e -> handleMouseClick());
 	    }
-
-	    
-	
-
-	    
-	    
 
 	    /* Handle a mouse click event */
 	    private void handleMouseClick() {
 			System.out.println("Cell");
+			//this.setStyle("-fx-background-color: gold");
+
+			Image image = new Image(new File("image/test.png").toURI().toString(), this.getWidth()+3, this.getHeight()+3, false, false);
+			ImageView iv = new ImageView(image);
+			this.getChildren().add(iv);
+			
+			//BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+			//this.setBackground(new Background(bg));
   }
+	    
  }
 }
