@@ -18,9 +18,6 @@ import javafx.scene.shape.Line;
 
 public class Main extends Application {
 	
-	
-	  
-
 	  // Create and initialize cell
 	  private Cell[][] cell =  new Cell[10][10];
 
@@ -47,8 +44,14 @@ public class Main extends Application {
 			    // Pane to hold cell
 			    GridPane gridPane = new GridPane(); 
 			    for (int i = 0; i < 10; i++)
-			      for (int j = 0; j < 10; j++)
-			    	  gridPane.add(cell[i][j] = new Cell(), j, i);
+			      for (int j = 0; j < 10; j++) {
+			    	  
+			    	  Cell cell = new Cell();
+			    	  cell.i = i;
+			    	  cell.j = j;
+			    	  
+			    	  gridPane.add(this.cell[i][j] = cell, j, i);
+			      }
 			    
 			    gridPane.setHgap(3);
 			    gridPane.setVgap(3);
@@ -111,7 +114,10 @@ public class Main extends Application {
 	
 	// An inner class for a cell
 	  public class Cell extends Pane {
-	  
+		  
+		public int i;
+		public int j;
+		  
 	    public Cell() {
 	      
 	      setStyle("-fx-border-color: black"); 
@@ -124,12 +130,14 @@ public class Main extends Application {
 			System.out.println("Cell");
 			//this.setStyle("-fx-background-color: gold");
 
-			Image image = new Image(new File("image/test.png").toURI().toString(), this.getWidth()+3, this.getHeight()+3, false, false);
+			Image image = new Image(new File("image/mcwood.png").toURI().toString(), this.getWidth()+3, this.getHeight()+3, false, false);
 			ImageView iv = new ImageView(image);
 			this.getChildren().add(iv);
 			
 			//BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 			//this.setBackground(new Background(bg));
+			
+			lblStatusDownLeft.setText("(" + i + "," + j + ")");
   }
 	    
  }
