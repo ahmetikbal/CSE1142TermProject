@@ -25,7 +25,6 @@ public class Main extends Application {
 	  private Label lblStatusUpLeft = new Label("Level #1");
 	  private Label lblStatusUpCenter = new Label("0");
 	  private Label lblStatusUpRight = new Label("High Score: 3");
-	  
 	  private Label lblStatusDownLeft = new Label("---Text---");
 	  
 	  Image image = new Image(new File("image/mcwood.png").toURI().toString(), 50, 50, false, false);
@@ -267,7 +266,10 @@ public class Main extends Application {
 					boxCount++;
 					reGenerator();
 				}
+				scoreGenerator();
+				boxCount=0;
 			}
+			
 			
 			
 			
@@ -292,6 +294,9 @@ public class Main extends Application {
 	    			}
 	    		}
 	    	}
+	    }
+	    public void scoreGenerator() {
+	    	
 	    }
 	    
 	    
