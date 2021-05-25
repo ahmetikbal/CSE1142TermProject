@@ -50,7 +50,7 @@ public class Main extends Application {
 	  public int finalScore = 0;
 	  public int boxCount;
 	  
-	  
+	  Button nextLevel = new Button("Next Level");
 	  
 	@Override
 	public void start(Stage primaryStage) {
@@ -98,7 +98,8 @@ public class Main extends Application {
 			    borderPaneDown.setPadding(new Insets(5,5,5,5));
 			    borderPaneDown.setStyle("-fx-background-color: gold");
 			    borderPaneDown.setLeft(lblStatusDownLeft);
-			    Button nextLevel = new Button("Next Level");
+			    
+			    nextLevel.setDisable(true);
 			    nextLevel.setOnMouseClicked(e -> {
 					try {
 						handleMouseClickButton();
@@ -143,6 +144,9 @@ public class Main extends Application {
 	}
 	
 	private Object handleMouseClickButton() throws FileNotFoundException {
+		nextLevel.setDisable(true);
+		lblStatusUpCenter.setText(String.valueOf(0));
+		finalScore=0;
 		System.out.println("Next level");
 		level++;
 		levelGenerator();
@@ -281,6 +285,7 @@ public class Main extends Application {
 				}
 				scoreGenerator(boxCount);
 				lblStatusDownLeft.setText(box+box2+box3+box4+box5+" ("+score+" points)");
+				hasFinished();
 				score = 0;
 				boxCount=0;
 			}
@@ -334,6 +339,21 @@ public class Main extends Application {
 	    	
 	    	lblStatusUpCenter.setText(String.valueOf(finalScore));
 	    	
+	    }
+	    public void hasFinished() {
+			boolean clickable = false;
+			for(int i =0;i<10;i++) {
+				for(int j=0;j<10;j++) {
+					if(cell[i][j].hp>0) {
+						clickable = true;
+					}
+				}
+			}
+			if(!clickable) {
+				nextLevel.setDisable(false);
+			}
+				
+					
 	    }
 	    
 	    
