@@ -47,6 +47,9 @@ public class Main extends Application {
 	  
 	  public int level = 1;
 	  
+	  public int score;
+	  public int boxCount;
+	  
 	  
 	  
 	@Override
@@ -161,6 +164,7 @@ public class Main extends Application {
 		for(int i=0;i<10;i++) {
     		for(int j = 0;j<10;j++) {
     			cell[i][j].setBackground(new Background(stone));
+    			cell[i][j].hp = -1;
     		}
     	}
 		 //Take input from level txt files
@@ -182,17 +186,18 @@ public class Main extends Application {
 	    	if(type.equals(e)) {
 	    		
 	    		cell[xloc][yloc].setBackground(new Background(space));
+	    		cell[xloc][yloc].hp = 0;
 	    		
 	    	}
 	    	else if(type.equals(m)) {
 	    		
 	    		cell[xloc][yloc].setBackground(new Background(mirror));
-	    		
+	    		cell[xloc][yloc].hp = 1;
 	    	}
 	    	else if(type.equals(w)) {
 	    		
 	    		cell[xloc][yloc].setBackground(new Background(wood));
-	    		
+	    		cell[xloc][yloc].hp = 2;
 	    	}
 	    	
 	    	
@@ -219,6 +224,7 @@ public class Main extends Application {
 		  
 		public int i;
 		public int j;
+		public int hp;
 		
 		  
 	    public Cell() {
@@ -237,11 +243,56 @@ public class Main extends Application {
 			/*BackgroundImage bg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 			this.setBackground(new Background(bg));*/
 			
+			if(this.hp>0) {
+				this.hp-=1;
+				boxCount++;
+				reGenerator();
+				if(cell[(this.i)+1][this.j].hp>0) {
+					cell[(this.i)+1][this.j].hp-=1;
+					boxCount++;
+					reGenerator();
+				}
+				if(cell[(this.i)-1][this.j].hp>0) {
+					cell[(this.i)-1][this.j].hp-=1;
+					boxCount++;
+					reGenerator();
+				}
+				if(cell[this.i][(this.j)+1].hp>0) {
+					cell[this.i][(this.j)+1].hp-=1;
+					boxCount++;
+					reGenerator();
+				}
+				if(cell[this.i][(this.j)-1].hp>0) {
+					cell[this.i][(this.j)-1].hp-=1;
+					boxCount++;
+					reGenerator();
+				}
+			}
 			
 			
 			
-			lblStatusDownLeft.setText("(" + i + "," + j + ")");
+			
+			lblStatusDownLeft.setText("(" + i + "," + j + ")" + " "+ hp);
   }
+	    
+	    public void reGenerator() {
+	    	for(int i =0;i<10;i++) {
+	    		for(int j = 0;j<10;j++) {
+	    			if(cell[i][j].hp == -1) {
+	    				cell[i][j].setBackground(new Background(stone));
+	    			}
+	    			else if(cell[i][j].hp == 0) {
+	    				cell[i][j].setBackground(new Background(space));
+	    			}
+	    			else if(cell[i][j].hp == 1) {
+	    				cell[i][j].setBackground(new Background(mirror));
+	    			}
+	    			else if(cell[i][j].hp == 2) {
+	    				cell[i][j].setBackground(new Background(wood));
+	    			}
+	    		}
+	    	}
+	    }
 	    
 	    
 	    
