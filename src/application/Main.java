@@ -46,7 +46,8 @@ public class Main extends Application {
 	  
 	  public int level = 1;
 	  
-	  public int score;
+	  public int score =0;
+	  public int finalScore = 0;
 	  public int boxCount;
 	  
 	  
@@ -235,6 +236,13 @@ public class Main extends Application {
 
 	    /* Handle a mouse click event */
 	    private void handleMouseClick() {
+	    	
+	    	String box = "";
+	    	String box2 = "";
+	    	String box3 = "";
+	    	String box4 = "";
+	    	String box5 = "";
+	    	
 			System.out.println("Cell");
 			//this.setStyle("-fx-background-color: gold");
 			//this.getChildren().add(stone);
@@ -246,27 +254,34 @@ public class Main extends Application {
 				this.hp-=1;
 				boxCount++;
 				reGenerator();
+				 box = "Box :"+this.i+","+this.j; 
 				if(cell[(this.i)+1][this.j].hp>0) {
 					cell[(this.i)+1][this.j].hp-=1;
 					boxCount++;
+					box2 = "Hit :"+(this.i+1)+","+this.j;
 					reGenerator();
 				}
 				if(cell[(this.i)-1][this.j].hp>0) {
 					cell[(this.i)-1][this.j].hp-=1;
 					boxCount++;
+					box3 = "Hit :"+(this.i-1)+","+this.j;
 					reGenerator();
 				}
 				if(cell[this.i][(this.j)+1].hp>0) {
 					cell[this.i][(this.j)+1].hp-=1;
 					boxCount++;
+					box4 = "Hit :"+this.i+","+(this.j+1);
 					reGenerator();
 				}
 				if(cell[this.i][(this.j)-1].hp>0) {
 					cell[this.i][(this.j)-1].hp-=1;
 					boxCount++;
+					box5 = "Hit :"+this.i+","+(this.j-1);
 					reGenerator();
 				}
-				scoreGenerator();
+				scoreGenerator(boxCount);
+				lblStatusDownLeft.setText(box+box2+box3+box4+box5+" ("+score+" points)");
+				score = 0;
 				boxCount=0;
 			}
 			
@@ -274,7 +289,7 @@ public class Main extends Application {
 			
 			
 			
-			lblStatusDownLeft.setText("(" + i + "," + j + ")" + " "+ hp);
+			
   }
 	    
 	    public void reGenerator() {
@@ -295,7 +310,29 @@ public class Main extends Application {
 	    		}
 	    	}
 	    }
-	    public void scoreGenerator() {
+	    public void scoreGenerator(int bc) {
+	    	
+	    	switch(bc){
+	    	case 1:
+	    		score-=3;
+	    		break;
+	    	case 2:
+	    		score-=1;
+	    		break;
+	    	case 3:
+	    		score+=1;
+	    		break;
+	    	case 4:
+	    		score+=2;
+	    		break;
+	    	case 5:
+	    		score+=4;
+	    		break;
+	    	}
+	    	finalScore+=score;
+	    	
+	    	
+	    	lblStatusUpCenter.setText(String.valueOf(finalScore));
 	    	
 	    }
 	    
