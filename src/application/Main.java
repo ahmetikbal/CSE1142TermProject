@@ -262,25 +262,25 @@ public class Main extends Application {
 				if(cell[(this.i)+1][this.j].hp>0) {
 					cell[(this.i)+1][this.j].hp-=1;
 					boxCount++;
-					box2 = "Hit :"+(this.i+1)+","+this.j;
+					box2 = " Hit :"+(this.i+1)+","+this.j;
 					reGenerator();
 				}
 				if(cell[(this.i)-1][this.j].hp>0) {
 					cell[(this.i)-1][this.j].hp-=1;
 					boxCount++;
-					box3 = "Hit :"+(this.i-1)+","+this.j;
+					box3 = " Hit :"+(this.i-1)+","+this.j;
 					reGenerator();
 				}
 				if(cell[this.i][(this.j)+1].hp>0) {
 					cell[this.i][(this.j)+1].hp-=1;
 					boxCount++;
-					box4 = "Hit :"+this.i+","+(this.j+1);
+					box4 = " Hit :"+this.i+","+(this.j+1);
 					reGenerator();
 				}
 				if(cell[this.i][(this.j)-1].hp>0) {
 					cell[this.i][(this.j)-1].hp-=1;
 					boxCount++;
-					box5 = "Hit :"+this.i+","+(this.j-1);
+					box5 = " Hit :"+this.i+","+(this.j-1);
 					reGenerator();
 				}
 				scoreGenerator(boxCount);
