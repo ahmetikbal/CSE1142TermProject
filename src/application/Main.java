@@ -14,9 +14,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;  
+import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.MediaView;
 
 public class Main extends Application {
+	
+	 String path = "music/ses1.mp3";  
+     
+	 AudioClip audioClip = new AudioClip(Paths.get("music/ses1.mp3").toUri().toString());
+     
 	
 	  // Create and initialize cell
 	  private Cell[][] cell =  new Cell[10][10];
@@ -241,6 +251,7 @@ public class Main extends Application {
 	    /* Handle a mouse click event */
 	    private void handleMouseClick() {
 	    	
+	    	
 	    	String box = "";
 	    	String box2 = "";
 	    	String box3 = "";
@@ -351,6 +362,7 @@ public class Main extends Application {
 			}
 			if(!clickable) {
 				nextLevel.setDisable(false);
+				audioClip.play();
 			}
 				
 					
