@@ -6,29 +6,16 @@ import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;  
-import javafx.scene.media.MediaPlayer;  
-import javafx.scene.media.MediaView;
 
 public class Main extends Application {
-	
-	 String path = "music/ses1.mp3";  
      
-	 AudioClip audioClip = new AudioClip(Paths.get("music/ses2.mp3").toUri().toString());
-     
-	
 	  // Create and initialize cell
 	  private Cell[][] cell =  new Cell[10][10];
 
@@ -47,7 +34,6 @@ public class Main extends Application {
 	  BackgroundImage stone = new BackgroundImage(image2, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 	  BackgroundImage mirror = new BackgroundImage(image3, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 	  BackgroundImage space = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-	  
 	  	  
 	  public String type;
 	  
@@ -63,6 +49,10 @@ public class Main extends Application {
 	  public int boxCount;
 	  
 	  Button nextLevel = new Button("Next Level");
+	  
+		 String path = "music/ses1.mp3";  
+	     
+		 AudioClip audioClip = new AudioClip(Paths.get("music/ses2.mp3").toUri().toString());
 	  
 	@Override
 	public void start(Stage primaryStage) {
@@ -137,15 +127,7 @@ public class Main extends Application {
 			    primaryStage.setResizable(false);
 			    primaryStage.show(); // Display the stage  
 			    
-			    levelGenerator();
-			    
-			    
-			    
-				  
-				  
-			   
-			    
-			
+			    generateLevel();	
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -153,7 +135,6 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		
 		
 		launch(args);
 	}
@@ -164,12 +145,12 @@ public class Main extends Application {
 		finalScore=0;
 		System.out.println("Next level");
 		level++;
-		levelGenerator();
+		generateLevel();
 		lblStatusUpLeft.setText("Level #"+level);
 		return null;
 	}
 	
-	public void levelGenerator() throws FileNotFoundException {
+	public void generateLevel() throws FileNotFoundException {
 		
 		/*ImageView wood = new ImageView(image);
 		ImageView stone = new ImageView(image2);
@@ -177,9 +158,6 @@ public class Main extends Application {
 		
 		 String lvl = "levels/level"+level+".txt";
 		
-		
-		
-		 
 		for(int i=0;i<10;i++) {
     		for(int j = 0;j<10;j++) {
     			cell[i][j].setBackground(new Background(stone));
@@ -237,10 +215,7 @@ public class Main extends Application {
 	
 	// An inner class for a cell
 	  public class Cell extends Pane {
-		  
-		  	
-		  
-		  
+ 
 		public int i;
 		public int j;
 		public int hp;
@@ -273,47 +248,40 @@ public class Main extends Application {
 			if(this.hp>0) {
 				this.hp-=1;
 				boxCount++;
-				reGenerator();
 				 box = "Box :"+this.i+","+this.j; 
 				if(cell[(this.i)+1][this.j].hp>0) {
 					cell[(this.i)+1][this.j].hp-=1;
 					boxCount++;
 					box2 = " Hit :"+(this.i+1)+","+this.j;
-					reGenerator();
 				}
 				if(cell[(this.i)-1][this.j].hp>0) {
 					cell[(this.i)-1][this.j].hp-=1;
 					boxCount++;
 					box3 = " Hit :"+(this.i-1)+","+this.j;
-					reGenerator();
 				}
 				if(cell[this.i][(this.j)+1].hp>0) {
 					cell[this.i][(this.j)+1].hp-=1;
 					boxCount++;
 					box4 = " Hit :"+this.i+","+(this.j+1);
-					reGenerator();
 				}
 				if(cell[this.i][(this.j)-1].hp>0) {
 					cell[this.i][(this.j)-1].hp-=1;
 					boxCount++;
 					box5 = " Hit :"+this.i+","+(this.j-1);
-					reGenerator();
 				}
-				scoreGenerator(boxCount);
+				
+				updateCells();
+				generateScore(boxCount);
 				lblStatusDownLeft.setText(box+box2+box3+box4+box5+" ("+score+" points)");
 				hasFinished();
 				score = 0;
 				boxCount=0;
 			}
 			
-			
-			
-			
-			
-			
+	
   }
 	    
-	    public void reGenerator() {
+	    public void updateCells() {
 	    	for(int i =0;i<10;i++) {
 	    		for(int j = 0;j<10;j++) {
 	    			if(cell[i][j].hp == -1) {
@@ -331,9 +299,10 @@ public class Main extends Application {
 	    		}
 	    	}
 	    }
-	    public void scoreGenerator(int bc) {
+	    
+	    public void generateScore(int boxCount) {
 	    	
-	    	switch(bc){
+	    	switch(boxCount){
 	    	case 1:
 	    		score-=3;
 	    		break;
@@ -350,12 +319,13 @@ public class Main extends Application {
 	    		score+=4;
 	    		break;
 	    	}
-	    	finalScore+=score;
 	    	
+	    	finalScore+=score;
 	    	
 	    	lblStatusUpCenter.setText(String.valueOf(finalScore));
 	    	
 	    }
+	    
 	    public void hasFinished() {
 			boolean clickable = false;
 			for(int i =0;i<10;i++) {
@@ -366,6 +336,7 @@ public class Main extends Application {
 				}
 			}
 			if(!clickable) {
+				
 				try {
 					HighScores.high(level,finalScore);
 				} catch (IOException e) {
