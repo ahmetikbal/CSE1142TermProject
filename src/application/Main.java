@@ -134,7 +134,7 @@ public class Main extends Application {
 		}
 		
 		highScore = HighScores.getHighScore(level);
-		highScoreLabel.setText(String.valueOf(highScore));
+		highScoreLabel.setText("High Score: " + String.valueOf(highScore));
 
 		// Take input from level txt files
 		FileInputStream fileInput = new FileInputStream(lvl);
