@@ -50,8 +50,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		highScoreLabel.setText(String.valueOf(HighScores.getHigh(level)));
-
 		try {
 
 			// Pane to hold cell
@@ -134,6 +132,9 @@ public class Main extends Application {
 				cell[i][j].hp = -1;
 			}
 		}
+		
+		highScore = HighScores.getHighScore(level);
+		highScoreLabel.setText(String.valueOf(highScore));
 
 		// Take input from level txt files
 		FileInputStream fileInput = new FileInputStream(lvl);
@@ -177,7 +178,7 @@ public class Main extends Application {
 		finalScore = 0;
 		scoreLabel.setText("0");
 
-		level++;
+		if (level < 5) level++; else level = 0;
 		levelLabel.setText("Level #" + level);
 
 		generateLevel();
@@ -291,7 +292,7 @@ public class Main extends Application {
 
 		}
 
-		public void hasFinished() {
+		public void hasFinished(){
 
 			boolean clickable = false;
 
@@ -302,12 +303,12 @@ public class Main extends Application {
 
 			if (!clickable) {
 
-				try {
-					HighScores.high(level, finalScore);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					try {
+						if (finalScore > highScore) HighScores.createNewHighScore(level, finalScore);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				nextLevelButton.setDisable(false);
 				if(finalScore > 0) winSound.play(); else failSound.play();
