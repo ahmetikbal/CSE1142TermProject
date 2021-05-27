@@ -1,6 +1,7 @@
 package application;
 	
 import javafx.application.Application;
+
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -25,7 +26,7 @@ public class Main extends Application {
 	
 	 String path = "music/ses1.mp3";  
      
-	 AudioClip audioClip = new AudioClip(Paths.get("music/ses1.mp3").toUri().toString());
+	 AudioClip audioClip = new AudioClip(Paths.get("music/ses2.mp3").toUri().toString());
      
 	
 	  // Create and initialize cell
@@ -58,12 +59,16 @@ public class Main extends Application {
 	  
 	  public int score =0;
 	  public int finalScore = 0;
+	  public int highScore=0;
 	  public int boxCount;
 	  
 	  Button nextLevel = new Button("Next Level");
 	  
 	@Override
 	public void start(Stage primaryStage) {
+		
+		lblStatusUpRight.setText(String.valueOf(HighScores.getHigh(level)));
+		
 		try {
 			/*
 			BorderPane root = new BorderPane();
@@ -361,6 +366,12 @@ public class Main extends Application {
 				}
 			}
 			if(!clickable) {
+				try {
+					HighScores.high(level,finalScore);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				nextLevel.setDisable(false);
 				audioClip.play();
 			}
