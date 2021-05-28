@@ -14,23 +14,22 @@ public class HighScores {
 
 	public static void createNewHighScore(int level, int newScore) throws IOException {
 
-		String file = "highscores/level" + level + ".txt";
-		File lvlfile = new File(file);
+		String fileLoc = "highscores/level" + level + ".txt";
+		File lvlFile = new File(fileLoc);
 
-		if (lvlfile.createNewFile())
-			System.out.println("File created: " + lvlfile.getName());
+		if (lvlFile.createNewFile())
+			System.out.println("File created: " + lvlFile.getName());
 		else
 			System.out.println("File already exists.");
-		
 		
 		FileWriter writeFile = null;
 		BufferedWriter writer = null;
 		
 		try {
 			
-			writeFile = new FileWriter (lvlfile);
+			writeFile = new FileWriter (lvlFile);
 			writer = new BufferedWriter(writeFile);
-			writer.write(String.valueOf(newScore));
+			writer.write(String.valueOf(newScore)); //write new highscore
 			
 		} 
 		finally {

@@ -18,7 +18,7 @@ import javafx.scene.media.AudioClip;
 public class Main extends Application {
 
 	// Create and initialize cell
-	private Cell[][] cell = new Cell[10][10];
+	private Cell[][] cell = new Cell[10][10]; //10x10 Grid
 
 	// Create and initialize a status label
 	private Label levelLabel = new Label("Level #1");
@@ -52,7 +52,7 @@ public class Main extends Application {
 
 		try {
 
-			// Pane to hold cell
+			// GridPane to hold cell
 			GridPane gridPane = new GridPane();
 			for (int i = 0; i < 10; i++)
 				for (int j = 0; j < 10; j++) {
@@ -64,10 +64,11 @@ public class Main extends Application {
 					gridPane.add(this.cell[i][j] = cell, j, i);
 				}
 
-			gridPane.setHgap(3);
-			gridPane.setVgap(3);
+			gridPane.setHgap(3); //resize
+			gridPane.setVgap(3); //resize
 			gridPane.setPadding(new Insets(5, 5, 5, 5));
 
+			// MAIN PANE
 			BorderPane borderPane = new BorderPane();
 			borderPane.setCenter(gridPane);
 			borderPane.setStyle("-fx-background-color: lavender");
@@ -126,6 +127,7 @@ public class Main extends Application {
 
 		String lvl = "levels/level" + level + ".txt";
 
+		//RESET CELL TEXTURES AND HPS
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				cell[i][j].setBackground(new Background(stone));
@@ -213,22 +215,22 @@ public class Main extends Application {
 				this.hp -= 1;
 				cellCount++;
 				statusText += "Box: " + this.i + "," + this.j;
-				if (cell[(this.i) + 1][this.j].hp > 0) {
+				if (cell[(this.i) + 1][this.j].hp > 0) { //RIGHT
 					cell[(this.i) + 1][this.j].hp -= 1;
 					statusText += " Hit: " + (this.i + 1) + "," + this.j;
 					cellCount++;
 				}
-				if (cell[(this.i) - 1][this.j].hp > 0) {
+				if (cell[(this.i) - 1][this.j].hp > 0) { //LEFT
 					cell[(this.i) - 1][this.j].hp -= 1;
 					statusText += " Hit: " + (this.i - 1) + "," + this.j;
 					cellCount++;
 				}
-				if (cell[this.i][(this.j) + 1].hp > 0) {
+				if (cell[this.i][(this.j) + 1].hp > 0) { //UP
 					cell[this.i][(this.j) + 1].hp -= 1;
 					statusText += " Hit: " + this.i + "," + (this.j + 1);
 					cellCount++;
 				}
-				if (cell[this.i][(this.j) - 1].hp > 0) {
+				if (cell[this.i][(this.j) - 1].hp > 0) { //DOWN
 					cell[this.i][(this.j) - 1].hp -= 1;
 					statusText += " Hit: " + this.i + "," + (this.j - 1);
 					cellCount++;
@@ -244,7 +246,7 @@ public class Main extends Application {
 
 		}
 
-		public void updateCells() {
+		public void updateCells() { //This function updates cell textures depend on HP
 
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
@@ -266,7 +268,7 @@ public class Main extends Application {
 
 		}
 
-		public void generateScore(int cellCount) {
+		public void generateScore(int cellCount) { //This function increments score depend on cell count
 
 			switch (cellCount) {
 			case 1:
@@ -292,7 +294,7 @@ public class Main extends Application {
 
 		}
 
-		public void hasFinished(){
+		public void hasFinished(){ //Finish check
 
 			boolean clickable = false;
 
